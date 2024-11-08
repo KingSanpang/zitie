@@ -9,7 +9,9 @@
 ```bash
 pip install -r requirements.txt
 ```
-
+我使用conda来安装的。
+页面安装Pillow
+conda install -c conda-forge pypdf2=1.27.9
 ##### 2、更新配置:
 
 ```bash
