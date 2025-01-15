@@ -64,7 +64,8 @@ class ArticleProducer(object):
 		:return:
 		"""
 		total = len(string)
-		total_lines, remain = divmod(total, ROW)
+		# total_lines, remain = divmod(total, ROW)
+		total_lines, remain = divmod(total, 1)
 
 		page, line = 0, 0
 
@@ -74,7 +75,8 @@ class ArticleProducer(object):
 			if line == 0 and i != 0:
 				page += 1
 
-			yield page, line, i * ROW, (i + 1) * ROW
+			# yield page, line, i * ROW, (i + 1) * ROW
+			yield page, line, i * 1, (i + 1) * 1
 
 		if (line + 1) % LINE == 0:
 			page += 1
@@ -82,7 +84,8 @@ class ArticleProducer(object):
 		else:
 			line += 1
 
-		yield page, line, total_lines * ROW, total_lines * ROW + remain
+		# yield page, line, total_lines * ROW, total_lines * ROW + remain
+		yield page, line, total_lines * 1, total_lines * 1 + remain
 
 	def draw_vertical_line(self, x, y1, y2, width, step=1):
 		"""
@@ -194,7 +197,9 @@ class ArticleProducer(object):
 		for page, line, start, end in self.lining(self.text):
 
 			if (line + 1) % LINE == 0:
-				self.write_line(self.text[start:end], line)
+				print(f'write_line_0,{start},{end},{line}')
+
+				self.write_line(self.text[start:end]*WORD_COUNT_ONE_LINE, line)
 				path = self.save_image(page)
 
 				last_page = page
@@ -203,7 +208,8 @@ class ArticleProducer(object):
 
 				self._init_painting()
 			else:
-				self.write_line(self.text[start:end], line)
+				print(f'write_line_1,{start},{end},{line}')
+				self.write_line(self.text[start:end]*WORD_COUNT_ONE_LINE, line)
 
 		if page != last_page or page == 0:
 			path = self.save_image(page)
